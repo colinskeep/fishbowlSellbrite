@@ -1,30 +1,22 @@
-require('dotenv').config();
-const mysql = require('mysql2/promise');
-const bluebird = require('bluebird');
 const convertDate = require('./convertDate.js');
+const db = require('./db.js');
 
 exports.get = async function mapSalesOrder(data){
-  const connection = await mysql.createConnection({host: 'localhost', user: 'root', password: process.env.MY_PW, database: 'mysql', Promise: bluebird});
   let arr = [];
   var socount = 0;
   for(i = 0; i < data.length; i++){
     for(x = 0; x < data[i].items.length; x++){
-      const [rows,fields] = await connection.execute(`SELECT fbsku, sbsku, isfba FROM legend WHERE sbsku = '${data[i].items[x].sku}' AND fbsku != ''`);
+      const [rows,fields] = await db.execute(`SELECT fbsku, sbsku, isfba FROM legend WHERE sbsku = '${data[i].items[x].sku}' AND fbsku != ''`);
       try{
         let date = await convertDate.get(data[i].ordered_at);
         var location = rows.length != 0 ?
           rows[0].isfba === 'TRUE' ?
             'FBA':'Main'
           :console.log("couldn't import row no map: ", data[i].display_ref);
-        if(data[i].shipping_country_code === 'MY' || data[i].shipping_country_code === 'SE' || data[i].shipping_country_code === 'NZ'){
+        if(data[i].shipping_country_code === 'MY' || data[i].shipping_country_code === 'SE' || data[i].shipping_country_code === 'NZ' || data[i].shipping_country_code == 'IL'){
           data[i].shipping_country_code = 'US';
           data[i].shipping_state_region = '';
         }
-        // data[i].shipping_country_code === 'MY' || data[i].shipping_country_code === 'SE' || data[i].shipping_country_code === 'NZ' ?
-        //   ()=>{
-        //     data[i].shipping_country_code = 'US';
-        //     data[i].shipping_state_region = '';
-        //   } : null;
         if(x == rows.length - 1 && data[i].display_ref.startsWith('S') == false){
           if(socount == 0){
             arr.push('"Flag","SONum","Status","CustomerName","CustomerContact","BillToName","BillToAddress","BillToCity","BillToState","BillToZip","BillToCountry","ShipToName","ShipToAddress","ShipToCity","ShipToState","ShipToZip","ShipToCountry","ShipToResidential","CarrierName","TaxRateName","PriorityId","PONum","VendorPONum","Date","Salesman","ShippingTerms","PaymentTerms","FOB","Note","QuickBooksClassName","LocationGroupName","FulfillmentDate","URL","CarrierService","DateExpired","Phone","Email","CF-Custom"');

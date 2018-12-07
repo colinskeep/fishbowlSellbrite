@@ -1,11 +1,11 @@
-const availableQty = require('./availableQty.js');
+const availableQty = require('./availableQty.js');  //make async
 const asyncSendInventory = require('./asyncSendInventory.js');
 const ordersToImport = require('./ordersToImport.js');
 const insertOrder = require('./fbInsertOrder.js');
 const chunkArray = require('./chunkArray.js');
 const formCycleArray = require('./formCycleArray.js');
-const mapCycleSku = require('./database.js');
-const mapSalesOrder = require('./mapSalesOrder2.js');
+const mapCycleSku = require('./mapCycleSku.js');
+const mapSalesOrder = require('./mapSalesOrder3.js');
 
 async function syncInv(){
   try{
@@ -15,13 +15,14 @@ async function syncInv(){
     let final = await asyncSendInventory.send(result);
   }catch(error){return(error)}
 }
-setInterval(syncInv, 10000);
+setInterval(syncInv, 12000);
 
 async function syncOrders(){
   try {
     let data = await ordersToImport.get();
     let mappedso = await mapSalesOrder.get(data);
     let final = await insertOrder.send(mappedso);
+    state = false;
   }catch(error){return(error)}
 }
-setInterval(syncOrders, 60000);
+setInterval(syncOrders, 15000);
