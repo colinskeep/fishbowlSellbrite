@@ -18,7 +18,7 @@ async function syncInv(){
     const final = await asyncSendInventory.send(result);
   }catch(error){return(error)}
 }
-//setInterval(syncInv, 12000);
+setInterval(syncInv, 12000);
 
 async function syncOrders(){
   try {
@@ -27,7 +27,7 @@ async function syncOrders(){
     const final = await insertOrder.send(mappedso);
   }catch(error){return(error)}
 }
-//setInterval(syncOrders, 15000);
+setInterval(syncOrders, 15000);
 
 async function quickFulfillCycle(){
   try{

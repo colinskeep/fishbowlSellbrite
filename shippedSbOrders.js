@@ -2,9 +2,9 @@ require('dotenv').config();
 const superagent = require('superagent');
 
 exports.get = async function shippedSbOrders(data) {
-  console.log(data)
   var arr = [];
   var orderid = [];
+  var qs = [];
   var date = new Date();
   date.setDate(date.getDate() - 3);
   let i;
@@ -26,8 +26,11 @@ exports.get = async function shippedSbOrders(data) {
           })
           if(i == 4){
             for (var x = 0; x < data.length; x++){
-              console.log(x)
               if(orderid.indexOf(data[x].customerPO) >  -1){
+                qs.push({'customerPO': data[x].customerPO, 'dateCreated': data[x].dateCreated})
+              }
+              if(x === data.length - 1){
+                return(qs)
               }
             }
           }
