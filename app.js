@@ -18,7 +18,7 @@ async function syncInv(){
     const final = await asyncSendInventory.send(result);
   }catch(error){return(error)}
 }
-setInterval(syncInv, 12000);
+setInterval(syncInv, 60000);
 
 async function syncOrders(){
   try {
@@ -27,14 +27,14 @@ async function syncOrders(){
     const final = await insertOrder.send(mappedso);
   }catch(error){return(error)}
 }
-setInterval(syncOrders, 15000);
+setInterval(syncOrders, 120000);
 
 async function quickFulfillCycle(){
   try{
     const data = await openFbOrders.get();
     const quickFulfillOrders = await shippedSbOrders.get(data);
-    const final = await quickFulfill.send(quickFulfillOrders);
+    const final = await quickFulfill.send(data);
   }catch(error){return(error)}
 }
-//setInterval(quickFulfill(), 300000);
-quickFulfillCycle();
+setInterval(quickFulfillCycle, 12000);
+//quickFulfillCycle();
