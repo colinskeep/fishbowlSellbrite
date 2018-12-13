@@ -27,8 +27,8 @@ async function syncLastModified(){
     const mapped = await mapCycleSku.get(data);
     const result = await chunkArray.chunk(mapped, 50);
     const final = await asyncSendInventory.send(result);
-  }
-}catch(error){return(error)}
+  }catch(error){return(error)}
+}
 setInterval(syncLastModified, 60000);
 
 async function syncOrders(){
