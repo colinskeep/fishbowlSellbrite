@@ -1,4 +1,5 @@
 const availableQty = require('./availableQty.js');  //make async
+const lastModified = require('./lastModified.js');
 const asyncSendInventory = require('./asyncSendInventory.js');
 const ordersToImport = require('./ordersToImport.js');
 const insertOrder = require('./fbInsertOrder.js');
@@ -19,6 +20,14 @@ async function syncInv(){
   }catch(error){return(error)}
 }
 setInterval(syncInv, 60000);
+
+async function syncLastModified(){
+  const data = await lastModified.get();
+  const mapped = await mapCycleSku.get(data);
+  const result = await chunkArray.chunk(mapped, 50);
+  const final = await asyncSendInventory.send(result);
+}catch(error){return(error)}
+setInterval(syncLastModified, 60000);
 
 async function syncOrders(){
   try {

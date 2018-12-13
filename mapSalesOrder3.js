@@ -13,7 +13,7 @@ exports.get = async function mapSalesOrder(data){
           rows[0].isfba === 'TRUE' ?
             'FBA':'Main'
           :console.log("couldn't import row no map: ", data[i].display_ref);
-        if(data[i].shipping_country_code === 'MY' || data[i].shipping_country_code === 'SE' || data[i].shipping_country_code === 'NZ' || data[i].shipping_country_code == 'IL'){
+        if(data[i].shipping_country_code === 'MY' || data[i].shipping_country_code === 'SE' || data[i].shipping_country_code === 'NZ' || data[i].shipping_country_code == 'IL' || data[i].shipping_country_code == 'GR'){
           data[i].shipping_country_code = 'US';
           data[i].shipping_state_region = '';
         }
