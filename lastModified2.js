@@ -15,10 +15,10 @@ exports.get = () => {
       if (err){
         reject(Error(err))
       }else {
-          connection.query("SELECT DISTINCT(part.num) AS PART, (qtyinventory.QTYONHAND - qtyinventory.QTYALLOCATEDSO - qtyinventory.QTYALLOCATEDTO - qtyinventory.QTYNOTAVAILABLE) AS available FROM inventorylog JOIN part on part.id = inventorylog.partid JOIN qtyinventory on part.id = qtyinventory.partid WHERE inventorylog.locationgroupid = 1 AND qtyinventory.locationgroupid = 1 ORDER BY inventorylog.id DESC LIMIT 100",
+          connection.query("SELECT part.num AS PART, (qtyinventory.QTYONHAND - qtyinventory.QTYALLOCATEDSO - qtyinventory.QTYALLOCATEDTO - qtyinventory.QTYNOTAVAILABLE) AS Available FROM inventorylog JOIN part on part.id = inventorylog.partid JOIN qtyinventory on part.id = qtyinventory.partid WHERE begLocationId != '2' AND qtyinventory.locationgroupid = 1 ORDER BY inventorylog.id DESC LIMIT 100",
           function (error, results, fields) {
             if (error) throw error;
-            return(results);
+            resolve(results);
           });
           connection.release();
       };

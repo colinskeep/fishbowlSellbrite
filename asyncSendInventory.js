@@ -9,7 +9,10 @@ exports.send = async function retrieveEdited(data) {
         .set('Authorization', process.env.APIKEY)
         .set('Content-Type', 'application/json')
         .send({ 'inventory': data[i] });
-      return (response)
+        console.log(response.body.body)
+      if(i == data.length - 1){
+        return (response)
+      }
     }catch(error){console.log(error.response.res.text)}
   }
 }

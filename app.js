@@ -1,5 +1,5 @@
 const availableQty = require('./availableQty.js');  //make async
-const lastModified = require('./lastModified.js');
+const lastModified = require('./lastModified2.js');
 const asyncSendInventory = require('./asyncSendInventory.js');
 const ordersToImport = require('./ordersToImport.js');
 const insertOrder = require('./fbInsertOrder.js');
@@ -20,6 +20,7 @@ async function syncInv(){
   }catch(error){return(error)}
 }
 setInterval(syncInv, 60000);
+//syncInv();
 
 async function syncLastModified(){
   try{
@@ -29,7 +30,8 @@ async function syncLastModified(){
     const final = await asyncSendInventory.send(result);
   }catch(error){return(error)}
 }
-setInterval(syncLastModified, 60000);
+setInterval(syncLastModified, 120000);
+//syncLastModified();
 
 async function syncOrders(){
   try {
@@ -38,7 +40,7 @@ async function syncOrders(){
     const final = await insertOrder.send(mappedso);
   }catch(error){return(error)}
 }
-setInterval(syncOrders, 120000);
+//setInterval(syncOrders, 120000);
 
 async function quickFulfillCycle(){
   try{
@@ -47,5 +49,5 @@ async function quickFulfillCycle(){
     const final = await quickFulfill.send(data);
   }catch(error){return(error)}
 }
-setInterval(quickFulfillCycle, 12000);
+//setInterval(quickFulfillCycle, 12000);
 //quickFulfillCycle();
