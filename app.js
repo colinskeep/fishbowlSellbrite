@@ -19,7 +19,7 @@ async function syncInv(){
     const final = await asyncSendInventory.send(result);
   }catch(error){return(error)}
 }
-setInterval(syncInv, 60000);
+setInterval(syncInv, 6000);
 //syncInv();
 
 async function syncLastModified(){

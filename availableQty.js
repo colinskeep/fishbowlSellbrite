@@ -15,7 +15,7 @@ exports.get = () => {
       if (err){
         reject(Error(err))
       }else {
-          connection.query("SELECT part.num AS PART, (qtyinventory.QTYONHAND - qtyinventory.QTYALLOCATEDSO - qtyinventory.QTYALLOCATEDTO - qtyinventory.QTYNOTAVAILABLE) AS Available FROM qtyinventory RIGHT JOIN part on part.id = qtyinventory.PARTID WHERE qtyinventory.LOCATIONGROUPID = 1 ORDER BY RAND() LIMIT 300",
+          connection.query("SELECT part.num AS PART, IFNULL((SELECT (qtyinventory.QTYONHAND - qtyinventory.QTYALLOCATEDSO - qtyinventory.QTYALLOCATEDTO - qtyinventory.QTYNOTAVAILABLE) FROM qtyinventory WHERE locationgroupid = 1 and part.id = qtyinventory.partid),0) as Available FROM part WHERE activeFlag = TRUE ORDER BY RAND() LIMIT 300",
           function (error, results, fields) {
             if (error) throw error;
             resolve(results);
