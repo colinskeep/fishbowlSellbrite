@@ -41,7 +41,7 @@ async function syncOrders(){
   }catch(error){return(error)}
 }
 setInterval(syncOrders, 120000);
-//syncOrders();
+syncOrders();
 
 async function quickFulfillCycle(){
   try{
