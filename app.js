@@ -6,7 +6,7 @@ const insertOrder = require('./fbInsertOrder.js');
 const chunkArray = require('./chunkArray.js');
 const formCycleArray = require('./formCycleArray.js');
 const mapCycleSku = require('./mapCycleSku.js');
-const mapSalesOrder = require('./mapSalesOrder3.js');
+const mapSalesOrder = require('./mapSalesOrder4.js');
 const openFbOrders = require('./openFbOrders2.js');
 const shippedSbOrders = require('./shippedSbOrders.js');
 const quickFulfill = require('./quickFulfill.js');
@@ -40,7 +40,8 @@ async function syncOrders(){
     const final = await insertOrder.send(mappedso);
   }catch(error){return(error)}
 }
-//setInterval(syncOrders, 120000);
+setInterval(syncOrders, 120000);
+//syncOrders();
 
 async function quickFulfillCycle(){
   try{
@@ -49,5 +50,5 @@ async function quickFulfillCycle(){
     const final = await quickFulfill.send(data);
   }catch(error){return(error)}
 }
-//setInterval(quickFulfillCycle, 12000);
+setInterval(quickFulfillCycle, 12000);
 //quickFulfillCycle();
