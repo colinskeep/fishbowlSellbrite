@@ -12,7 +12,7 @@ exports.get = async function mapSalesOrder(data){
         var fbaarr = [];
         const [rows,fields] = await db.execute(`SELECT sku FROM fba`);
         const location = await isFba.get(rows, data[i].items[0].sku);
-        if(data[i].shipping_country_code === 'MY' || data[i].shipping_country_code === 'SE' || data[i].shipping_country_code === 'NZ' || data[i].shipping_country_code == 'IL' || data[i].shipping_country_code == 'GR'  || data[i].shipping_country_code == 'PR'){
+        if(data[i].shipping_country_code === 'MY' || data[i].shipping_country_code === 'SE' || data[i].shipping_country_code === 'NZ' || data[i].shipping_country_code == 'IL' || data[i].shipping_country_code == 'GR'  || data[i].shipping_country_code == 'PR' && data[i].items[0].unit_price !== 0){
           data[i].shipping_country_code = 'ZZ';
           data[i].shipping_state_region = '';
         }
@@ -30,11 +30,12 @@ exports.get = async function mapSalesOrder(data){
           for(let x = 0; x < data[i].items.length; x++){
             arr.push('"Item","10","'+data[i].items[x].inventory_sku+'","'+data[i].items[x].title.replace(/,/g, '').replace(/"/g, '').replace(/'/g, '').replace(/\./g,'')+'","'+data[i].items[x].quantity+'","ea","'+data[i].items[x].unit_price+'","TRUE","NON",,"None",,"TRUE","FALSE"');
         }
-      }
+      } else {console.log("did not import order: ", data[i].display_ref, "at :", data[i].items[0].unit_price)}
       if(socount == 10 || i== data.length -1){
           console.log("attempting to input ",socount," orders");
           socount = 0;
-          return(arr)
+          console.log(arr);
+          return(arr);
        }
      }catch(err){console.log(err)}
     }

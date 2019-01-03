@@ -19,7 +19,7 @@ async function syncInv(){
     const final = await asyncSendInventory.send(result);
   }catch(error){return(error)}
 }
-setInterval(syncInv, 6000);
+setInterval(syncInv, 20000);
 //syncInv();
 
 async function syncLastModified(){
@@ -30,7 +30,7 @@ async function syncLastModified(){
     const final = await asyncSendInventory.send(result);
   }catch(error){return(error)}
 }
-setInterval(syncLastModified, 120000);
+setInterval(syncLastModified, 150000);
 //syncLastModified();
 
 async function syncOrders(){
@@ -40,8 +40,8 @@ async function syncOrders(){
     const final = await insertOrder.send(mappedso);
   }catch(error){return(error)}
 }
-setInterval(syncOrders, 120000);
-syncOrders();
+setInterval(syncOrders, 180000);
+//syncOrders();
 
 async function quickFulfillCycle(){
   try{
@@ -50,5 +50,5 @@ async function quickFulfillCycle(){
     const final = await quickFulfill.send(data);
   }catch(error){return(error)}
 }
-setInterval(quickFulfillCycle, 12000);
+setInterval(quickFulfillCycle, 60000);
 //quickFulfillCycle();

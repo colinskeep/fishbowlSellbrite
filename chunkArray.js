@@ -6,6 +6,5 @@ exports.chunk = function chunkArray(arr, chunkSize){
     chunked = arr.slice(index, index+chunkSize)
     tempArray.push(chunked);
   }
-  console.log(tempArray)
   return tempArray;
 }
