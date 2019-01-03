@@ -12,6 +12,9 @@ exports.get = async function syncOrders(){
       arr.push(fbOrder[i].customerpo);
       if (i == fbOrder.length - 1){
         for (let x = 0; x < sbOrder.length; x++){
+          if(sbOrder[x].display_ref.length > 24) {
+            sbOrder[x].display_ref = sbOrder[x].display_ref.substring(8);
+          }
           if(arr.indexOf(sbOrder[x].display_ref) == -1){
             importOrder.push(sbOrder[x]);
           }
