@@ -6,12 +6,12 @@ var fb = new Fishbowl({
     IAID          : process.env.FB_IAID,
     IAName        : process.env.FB_NAME,
     password      : process.env.FB_PASS,
-    username      : 'node',
+    username      : 'node3',
     bunyanLevel   : process.env.FB_BUNYAN
 });
 
 exports.send = function openFbOrders(final){
-  for (i = 0; i < 9; i++){
+  for (i = 0; i < 3; i++){
     var position = Math.floor(Math.random()*final.length);
     fb.sendRequest({
       action: 'QuickShipRq',
@@ -29,5 +29,7 @@ exports.send = function openFbOrders(final){
         console.log("attempted quickship")
       }
     })
+  } if (i == 2) {
+    return;
   }
 }
