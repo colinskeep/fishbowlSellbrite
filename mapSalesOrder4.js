@@ -32,13 +32,13 @@ exports.get = async function mapSalesOrder(data){
           socount++
           for(let x = 0; x < data[i].items.length && data[i].items[x].quantity > 0; x++){
             arr.push('"Item","10","'+data[i].items[x].inventory_sku+'","'+data[i].items[x].title.replace(/,/g, '').replace(/"/g, '').replace(/'/g, '').replace(/\./g,'')+'","'+data[i].items[x].quantity+'","ea","'+data[i].items[x].unit_price+'","TRUE","NON",,"None",,"TRUE","FALSE"');
-        }
+          }
       } else {
         if (data[i].items[0].inventory_sku == null  && data[i].display_ref.startsWith('S') == false){
           console.log(data[i].display_ref, data[i].items[0].sku, " needs to be mapped")
         }
       }
-      if(socount == 10 || i== data.length -1){
+      if(socount == 40 || i== data.length -1){
           console.log("attempting to input ",socount," orders");
           socount = 0;
           return(arr);

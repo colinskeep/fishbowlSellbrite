@@ -1,0 +1,30 @@
+{
+  "name": "fishbowlSellbrite",
+  "version": "1.0.0",
+  "description": "MySQL\r NodeJS\r Windows Build Tools",
+  "main": "app.js",
+  "dependencies": {
+    "diacritics": "^1.3.0",
+    "dotenv": "^6.2.0",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.4",
+    "node-fishbowl": "^1.2.1",
+    "superagent": "^4.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "pm2 start app.js --watch --no-daemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colinskeep/fishbowlSellbrite.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/colinskeep/fishbowlSellbrite/issues"
+  },
+  "homepage": "https://github.com/colinskeep/fishbowlSellbrite#readme"
+}
