@@ -22,7 +22,7 @@ exports.get = async function mapSalesOrder(data){
         if (data[i].shipping_address_1 == null){
           data[i].shipping_address_1 = data[i].shipping_address_2
         }
-        if(data[i].display_ref.startsWith('S') == false && data[i].items[0].inventory_sku != null && data[i].items[0].unit_price !== 0 ){
+        if(data[i].display_ref.startsWith('S') == false && data[i].items[0].inventory_sku != null && data[i].items[0].unit_price !== 0 && data[i].display_ref != '227653'){
           if(socount == 0){
             arr =  [];
             arr.push('"Flag","SONum","Status","CustomerName","CustomerContact","BillToName","BillToAddress","BillToCity","BillToState","BillToZip","BillToCountry","ShipToName","ShipToAddress","ShipToCity","ShipToState","ShipToZip","ShipToCountry","ShipToResidential","CarrierName","TaxRateName","PriorityId","PONum","VendorPONum","Date","Salesman","ShippingTerms","PaymentTerms","FOB","Note","QuickBooksClassName","LocationGroupName","FulfillmentDate","URL","CarrierService","DateExpired","Phone","Email","CF-Custom"');
@@ -34,8 +34,10 @@ exports.get = async function mapSalesOrder(data){
             arr.push('"Item","10","'+data[i].items[x].inventory_sku+'","'+diacritics.remove(data[i].items[x].title.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/,/g, '').replace(/"/g, '').replace(/'/g, '').replace(/\./g,'').replace(/[\x00-\x08\x0E-\x1F\x7F-\uFFFF]/g, ''))+'","'+data[i].items[x].quantity+'","ea","'+data[i].items[x].unit_price+'","TRUE","NON",,"None",,"TRUE","FALSE"');
           }
       } else {
-        if (data[i].items[0].inventory_sku == null  && data[i].display_ref.startsWith('S') == false){
-          console.log(data[i].display_ref, data[i].items[0].sku, " needs to be mapped")
+        for (let v = 0; v < data[i].items.length && data[i].items[v].quantity > 0; v++) {
+          if (data[i].items[v].inventory_sku == null  && data[i].display_ref.startsWith('S') == false){
+            console.log(data[i].display_ref, data[i].items[v].sku, " needs to be mapped")
+          }
         }
       }
       if(socount == 40 || i== data.length -1){
