@@ -37,7 +37,9 @@ async function syncOrders(){
   try {
     const data = await ordersToImport.get();
     const mappedso = await mapSalesOrder.get(data);
-    const final = await insertOrder.send(mappedso);
+    if (mappedso) {
+      const final = await insertOrder.send(mappedso);
+    }
   }catch(error){return(error)}
 }
 setInterval(syncOrders, 180000);

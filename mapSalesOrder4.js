@@ -9,6 +9,7 @@ exports.get = async function mapSalesOrder(data){
   const [rows,fields] = await db.execute(`SELECT * FROM fba`);
     for(i = 0; i < data.length; i++){
       try{
+        console.log(i);
         let date = await convertDate.get(data[i].ordered_at);
         var fbaarr = [];
         const [rows,fields] = await db.execute(`SELECT sku FROM fba`);
@@ -40,7 +41,7 @@ exports.get = async function mapSalesOrder(data){
           }
         }
       }
-      if(socount == 40 || i== data.length -1){
+      if(socount == 40 || (i == data.length -1 && data.length !== 0)){
           console.log("attempting to input ",socount," orders");
           socount = 0;
           return(arr);
