@@ -14,6 +14,7 @@ const express = require('express');
 const app = require('./express.js');
 const mysql = require('./maintainDb.js');
 const scanz0r = require('./scanz0r.js');
+const fnsku = require('./fnsku.js');
 //const app = express();
 
 async function syncInv(){
@@ -74,6 +75,11 @@ app.post('/values', async function(req, res) {
 
 app.post('/scanzor', async function(req, res) {
   const updateScanzor = await scanz0r.update(req);
+  res.send('true');
+})
+
+app.post('/fnsku', async function(req, res) {
+  const updateFnsku = await fnsku.update(req);
   res.send('true');
 })
 

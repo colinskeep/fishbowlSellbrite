@@ -9,7 +9,7 @@ const conn = mysql.createConnection({
   database : process.env.SZ_DB,
 });
 
-const sql = "INSERT INTO legend (sellersku, fbsku, upc) VALUES ?";
+const sql = "INSERT INTO fnsku (fnsku, sku) VALUES ?";
 
 async function update(req) {
   try {
