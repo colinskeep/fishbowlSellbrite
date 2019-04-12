@@ -10,6 +10,11 @@ const mapSalesOrder = require('./mapSalesOrder4.js');
 const openFbOrders = require('./openFbOrders2.js');
 const shippedSbOrders = require('./shippedSbOrders.js');
 const quickFulfill = require('./quickFulfill.js');
+const express = require('express');
+const app = require('./express.js');
+const mysql = require('./maintainDb.js');
+const scanz0r = require('./scanz0r.js');
+//const app = express();
 
 async function syncInv(){
   try{
@@ -54,6 +59,23 @@ async function quickFulfillCycle(){
 }
 setInterval(quickFulfillCycle, 60000);
 //quickFulfillCycle();
+
+app.listen(process.env.API_PORT, () => {
+  console.info('Listening on port 9000');
+});
+
+app.post('/values', async function(req, res) {
+  try {
+    const updateFba = await mysql.update(req);
+    console.log(updateFba);
+    res.send('true');
+  } catch(err) {throw err}
+});
+
+app.post('/scanzor', async function(req, res) {
+  const updateScanzor = await scanz0r.update(req);
+  res.send('true');
+})
 
 setTimeout(function(){
   process.exit(0);

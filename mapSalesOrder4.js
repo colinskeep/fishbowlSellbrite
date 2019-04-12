@@ -41,7 +41,7 @@ exports.get = async function mapSalesOrder(data){
           }
         }
       }
-      if(socount == 40 || (i == data.length -1 && data.length !== 0)){
+      if(socount == 10 || (i == data.length -1 && data.length !== 0)){
           console.log("attempting to input ",socount," orders");
           socount = 0;
           return(arr);

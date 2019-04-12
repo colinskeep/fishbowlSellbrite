@@ -4,12 +4,18 @@
   "description": "MySQL\r NodeJS\r Windows Build Tools",
   "main": "app.js",
   "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
     "diacritics": "^1.3.0",
     "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
     "mysql": "^2.16.0",
     "mysql2": "^1.6.4",
     "node-fishbowl": "^1.2.1",
-    "superagent": "^4.0.0"
+    "node-mysql": "^0.4.2",
+    "superagent": "^4.0.0",
+    "util": "^0.11.1"
   },
   "devDependencies": {},
   "scripts": {
