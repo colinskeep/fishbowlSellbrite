@@ -9,12 +9,14 @@ exports.get = async function mapSalesOrder(data){
   const [rows,fields] = await db.execute(`SELECT * FROM fba`);
     for(i = 0; i < data.length; i++){
       try{
-        console.log(i);
         let date = await convertDate.get(data[i].ordered_at);
-        var fbaarr = [];
+        let fbaarr = [];
         const [rows,fields] = await db.execute(`SELECT sku FROM fba`);
         const location = await isFba.get(rows, data[i].items[0].sku);
         if(data[i].shipping_country_code !== 'US'){
+          data[i].shipping_state_region = '';
+        }
+        if(data[i].shipping_state_region = 'Virgin Islands') {
           data[i].shipping_state_region = '';
         }
         if(data[i].display_ref.length > 24) {
@@ -22,6 +24,15 @@ exports.get = async function mapSalesOrder(data){
         }
         if (data[i].shipping_address_1 == null){
           data[i].shipping_address_1 = data[i].shipping_address_2
+        }
+        if (data[i].shipping_address_1 == null && data[i].shipping_address_2 == null) {
+          data[i].shipping_contact_name = 'Confidential';
+          data[i].shipping_address_1 = 'Confidential';
+          data[i].shipping_address_2 = 'Confidential';
+          data[i].shipping_city = 'Confidential';
+          data[i].shipping_state_region = 'AZ';
+          data[i].shipping_postal_code = '85260';
+          data[i].shipping_country_code = 'US';
         }
         if(data[i].display_ref.startsWith('S') == false && data[i].items[0].inventory_sku != null && data[i].items[0].unit_price !== 0 && data[i].display_ref != '227653'){
           if(socount == 0){
@@ -41,11 +52,13 @@ exports.get = async function mapSalesOrder(data){
           }
         }
       }
-      if(socount == 10 || (i == data.length -1 && data.length !== 0)){
+      if(socount == 25 || (i == data.length -1 && data.length !== 0)){
           console.log("attempting to input ",socount," orders");
           socount = 0;
           return(arr);
        }
-     }catch(err){console.log(err)}
+     }catch(err){
+       console.log(err)}
+       console.log(data[i].display_ref, 'could not be imported');
     }
 }
